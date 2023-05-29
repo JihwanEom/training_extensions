@@ -1,4 +1,4 @@
-"""Initialization of OTX Anomalib."""
+"""Model configurations."""
 
 # Copyright (C) 2022 Intel Corporation
 #
@@ -13,8 +13,3 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions
 # and limitations under the License.
-
-from .inference import InferenceTask
-from .train import TrainingTask
-
-__all__ = ["InferenceTask", "TrainingTask"]

@@ -1,6 +1,6 @@
-"""Configurable parameters for Padim anomaly Segmentation task."""
+"""Configs Initialization of OTX Detection."""
 
-# Copyright (C) 2021 Intel Corporation
+# Copyright (C) 2022 Intel Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,11 +14,6 @@
 # See the License for the specific language governing permissions
 # and limitations under the License.
 
-from attr import attrs
+from .configuration import DetectionConfig
 
-from otx.algorithms.anomaly.configs.base import PadimAnomalyBaseConfig
-
-
-@attrs
-class PadimAnomalySegmentationConfig(PadimAnomalyBaseConfig):
-    """Configurable parameters for PADIM anomaly Segmentation task."""
+__all__ = ["DetectionConfig"]

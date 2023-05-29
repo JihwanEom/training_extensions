@@ -273,6 +273,7 @@ class OTXDetDataset(CustomDataset):
         for metric in metrics:  # pylint: disable=redefined-argument-from-local
             if metric not in allowed_metrics:
                 raise KeyError(f"metric {metric} is not supported")
+
             annotations = [self.get_ann_info(i) for i in range(len(self))]
             iou_thrs = [iou_thr] if isinstance(iou_thr, float) else iou_thr
             if metric == "mAP":
@@ -280,6 +281,21 @@ class OTXDetDataset(CustomDataset):
                 mean_aps = []
                 for iou_thr in iou_thrs:  # pylint: disable=redefined-argument-from-local
                     print_log(f'\n{"-" * 15}iou_thr: {iou_thr}{"-" * 15}')
+                    # from mmdet.core import encode_mask_results
+                    # masks = [i.tolist() for i in results[0]]
+                    import segmentation_models_pytorch as smp
+                    for pred_mask, gt_mask in zip(results[0], annotations):
+                        breakpoint()
+                        gt_mask = gt_mask['masks'].to_tensor(float, "cuda")
+                        batch_stats = smp.metrics.get_stats(
+                            pred_mask,
+                            gt_mask.int(),
+                            mode='binary',
+                            threshold=0.5,
+                        )
+                        batch_iou = smp.metrics.iou_score(*batch_stats, reduction="micro-imagewise")
+                        batch_f1 = smp.metrics.f1_score(*batch_stats, reduction="micro-imagewise")
+                        breakpoint()
                     if isinstance(results[0], tuple):
                         mean_ap, _ = eval_segm(
                             results,
